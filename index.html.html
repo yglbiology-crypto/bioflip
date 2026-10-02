@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BioFlip • BioNivas NEET Biology Studio</title>
+  <!-- Google Fonts: Gidugu for Telugu and Inter for Stock Android English UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gidugu&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      width: 100%; height: 100%; background: #f8fafc !important; color: #090d16 !important;
+      font-family: 'Inter', Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden; font-weight: 500;
+    }
+    .app-layout { display: flex; flex-direction: column; width: 100%; height: 100%; max-width: 1400px; margin: 0 auto; background: #ffffff; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+    header {
+      background: #ffffff; border-bottom: 2px solid #cbd5e1;
+      padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+      min-height: 60px;
+    }
+    .brand { font-size: 15px; font-weight: 800; color: #1d4ed8; display: flex; align-items: center; gap: 6px; }
+    .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .btn {
+      padding: 8px 14px; border-radius: 8px; border: 1.5px solid #94a3b8;
+      background: #f1f5f9; color: #090d16; font-size: 13px; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 5px; user-select: none;
+      transition: background 0.1s, transform 0.1s; white-space: nowrap;
+    }
+    .btn:active { background: #cbd5e1; transform: scale(0.97); }
+    .btn-blue { background: #1d4ed8; color: #ffffff; border: none; }
+    .btn-red { background: #fee2e2; color: #991b1b; border-color: #f87171; }
+    .btn-green { background: #ecfdf5; color: #065f46; border-color: #10b981; }
+    .scroll-pane {
+      flex: 1; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch; padding-bottom: 90px !important;
+    }
+    .card {
+      border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 14px; margin-bottom: 14px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); color: #090d16;
+    }
+    .card-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #090d16; }
+    .card-sub { font-size: 12px; color: #334155; font-weight: 600; }
+    .flowchart-slider-tabs {
+      display: flex; gap: 8px; overflow-x: auto; padding: 6px 0; margin-bottom: 10px; -webkit-overflow-scrolling: touch;
+    }
+    .flowchart-slider-tabs::-webkit-scrollbar { height: 4px; }
+    .flowchart-slider-tabs::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+    /* Eye-Friendly Low-Glare Matte Terminal Box */
+    .ascii-box {
+      font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      font-size: 12px; font-weight: 600; line-height: 1.5;
+      background: #18181b; color: #e4e4e7;
+      border: 1px solid #27272a; border-radius: 12px; padding: 16px;
+      overflow-x: auto; white-space: pre; margin-top: 8px; margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); -webkit-overflow-scrolling: touch;
+    }
+
+    /* Section 2 Whiteboard Black Box */
+    .whiteboard-black-box {
+      font-family: "SF Mono", Consolas, monospace; font-size: 11.5px; font-weight: 600;
+      background: #18181b; color: #e4e4e7;
+      border: 1px solid #27272a; border-radius: 10px; padding: 14px;
+      margin-bottom: 12px; white-space: pre-wrap; overflow-x: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Typography */
+    .telugu-script {
+      font-family: 'Gidugu', sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #0f172a;
+    }
+    .english-script {
+      font-family: 'Inter', Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1e293b;
+    }
+    .gci-section-title {
+      font-size: 15px; font-weight: 800; color: #1e40af; border-bottom: 2.5px solid #3b82f6; padding-bottom: 6px; margin: 20px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .script-box {
+      background: #f8fafc; border-left: 4px solid #2563eb; padding: 12px 16px; margin: 10px 0; border-radius: 0 8px 8px 0; white-space: pre-wrap;
+    }
+    textarea, input {
+      width: 100%; padding: 12px; border: 1.5px solid #94a3b8; border-radius: 8px; font-size: 13px; font-family: monospace; font-weight: 600; margin-top: 6px; outline: none; background: #ffffff; color: #090d16;
+    }
+    textarea:focus, input:focus { border-color: #1d4ed8; }
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #ffffff; border-radius: 14px; padding: 20px; max-width: 420px; width: 100%; box-shadow: 0 12px 30px rgba(0,0,0,0.3); border: 1.5px solid #cbd5e1;
+    }
+    #toast {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: #059669; color: #ffffff; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 800; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1100; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .view-panel { display: none; width: 100%; height: 100%; flex-direction: column; }
+    .view-panel.active { display: flex; }
+
+    @media (max-width: 600px) {
+      header { padding: 8px 12px; }
+      .brand { font-size: 13px; }
+      .btn { padding: 6px 10px; font-size: 11.5px; }
+      .scroll-pane { padding: 12px; }
+    }
+
+    @media print {
+      body { overflow: visible !important; height: auto !important; background: #fff !important; }
+      header, .btn, #modal, #toast, .flowchart-slider-tabs { display: none !important; }
+      .app-layout, .view-panel, .scroll-pane { display: block !important; overflow: visible !important; height: auto !important; position: static !important; max-width: 100% !important; box-shadow: none !important; }
+      #view-subtopics { display: flex !important; }
+      .ascii-box { border: 1px solid #000 !important; background: #18181b !important; color: #e4e4e7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; page-break-inside: avoid; }
+      .whiteboard-black-box { background: #18181b !important; color: #e4e4e7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; page-break-inside: avoid; }
+      .card { page-break-inside: avoid; box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-root" class="app-layout">
+    <!-- 1. SUBJECTS VIEW -->
+    <div id="view-subjects" class="view-panel active">
+      <header>
+        <div class="brand">🌱 BioFlip • BioNivas</div>
+        <div class="header-actions">
+          <button class="btn" id="btn-zoom-out">🔍 -</button>
+          <button class="btn" id="btn-zoom-in">🔍 +</button>
+          <button class="btn btn-blue" id="btn-to-admin">⚙️ Admin Studio</button>
+        </div>
+      </header>
+      <div class="scroll-pane">
+        <p style="font-size:13px; font-weight:800; color:#1d4ed8; margin-bottom:10px;">NCERT CLASS 11 & 12 BIOLOGY STREAMS</p>
+        <div class="card" id="card-botany" style="border-left:5px solid #10b981; cursor:pointer;">
+          <div class="card-title">🌱 Botany (వృక్షశాస్త్రం) - Class 11 & 12</div>
+          <div class="card-sub">Plant Physiology, Diversity & Taxonomy</div>
+          <div id="botany-count" style="margin-top:8px; font-size:12px; font-weight:800; color:#047857;">Loading Chapters...</div>
+        </div>
+        <div class="card" id="card-zoology" style="border-left:5px solid #f59e0b; cursor:pointer;">
+          <div class="card-title">🧬 Zoology (జంతుశాస్త్రం) - Class 11 & 12</div>
+          <div class="card-sub">Human Physiology & Reproduction</div>
+          <div id="zoology-count" style="margin-top:8px; font-size:12px; font-weight:800; color:#b45309;">Loading Chapters...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. LESSONS VIEW -->
+    <div id="view-lessons" class="view-panel">
+      <header>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn" id="btn-lessons-back">← Streams</button>
+          <b id="lessons-header-title" style="font-size:15px; color:#090d16;">Chapters</b>
+        </div>
+        <button class="btn btn-blue" id="btn-lessons-to-admin">Admin</button>
+      </header>
+      <div class="scroll-pane" id="lessons-list"></div>
+    </div>
+
+    <!-- 3. SUBTOPICS VIEW -->
+    <div id="view-subtopics" class="view-panel">
+      <header>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn" id="btn-subtopics-back">← Chapters</button>
+          <b id="subtopics-header-title" style="font-size:14px; color:#1d4ed8;">Lesson</b>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-green" id="btn-download-pdf">📄 PDF</button>
+          <button class="btn btn-blue" id="btn-subtopics-to-admin">Admin</button>
+        </div>
+      </header>
+      <div style="display:flex; gap:6px; overflow-x:auto; padding:8px 16px; border-bottom:2px solid #cbd5e1; background:#f8fafc; flex-shrink:0;" id="subtopic-tab-bar"></div>
+      <div class="scroll-pane" id="subtopic-body"></div>
+    </div>
+
+    <!-- 4. ADMIN VIEW -->
+    <div id="view-admin" class="view-panel">
+      <header>
+        <button class="btn btn-blue" id="btn-admin-to-student">👁️ Student View</button>
+        <b style="font-size:14px;">Admin Studio</b>
+      </header>
+      <div class="scroll-pane">
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <button class="btn" id="btn-admin-tab-botany" style="flex:1; justify-content:center;">🌱 Botany</button>
+          <button class="btn" id="btn-admin-tab-zoology" style="flex:1; justify-content:center;">🧬 Zoology</button>
+        </div>
+        
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <b id="admin-chapters-label" style="font-size:13px;">Chapters</b>
+            <button class="btn btn-blue" id="btn-admin-add-chapter">+ Add Chapter</button>
+          </div>
+          <div id="admin-chapters-list"></div>
+        </div>
+
+        <div class="card" id="admin-subtopics-card" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <b id="admin-subtopics-label" style="font-size:13px;">Subtopics</b>
+            <button class="btn btn-blue" id="btn-admin-add-subtopic">+ New Subtopic</button>
+          </div>
+          <div id="admin-subtopics-list"></div>
+        </div>
+
+        <!-- 3-SECTION INJECTION PANEL -->
+        <div class="card" id="admin-generate-card" style="display:none; background:#f8fafc; border-color:#3b82f6;">
+          <b id="admin-generate-title" style="font-size:14px; color:#1d4ed8;">BioNivas Framework Injection</b>
+          <p style="font-size:12px; color:#334155; margin-top:4px;">Paste the respective sections below:</p>
+          
+          <label style="font-size:11px; font-weight:800; color:#1e40af; margin-top:10px; display:block;">SECTION 1: ANCHOR CHARTS (Use <code>---</code> or <code>===</code> between multiple charts):</label>
+          <textarea id="admin-sec1-ascii" rows="6" placeholder="=== Anchor Chart 1 ===\n[ASCII Box]\n---\n=== Anchor Chart 2 ===\n[ASCII Box]"></textarea>
+
+          <label style="font-size:11px; font-weight:800; color:#1e40af; margin-top:10px; display:block;">SECTION 2: WHITEBOARD LECTURE DELIVERY (Use <code>---</code> or <code>===</code> between multiple phases/tabs):</label>
+          <textarea id="admin-sec2-script" rows="6" placeholder="=== Phase 1: Hook ===\n[Whiteboard Action]: ...\n[Dialogue Delivery - Telugu]: ...\n---\n=== Phase 2: Core Architecture ===\n..."></textarea>
+
+          <label style="font-size:11px; font-weight:800; color:#1e40af; margin-top:10px; display:block;">SECTION 3: EDUCATOR MASTER DISSECTION (Deconstruction & Exam Patterns):</label>
+          <textarea id="admin-sec3-master" rows="5" placeholder="1. Line-by-Line Semantic Deconstruction: ... \n\n2. DTS & Exam Patterns: ..."></textarea>
+
+          <button class="btn btn-blue" id="btn-admin-inject-code" style="width:100%; margin-top:16px; padding:14px; justify-content:center; font-size:14px; font-weight:800;">
+            💾 Save & Inject into BioFlip App
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Dialog -->
+  <div id="modal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 id="modal-title" style="font-size:16px; margin-bottom:6px; color:#090d16;">Title</h3>
+      <p id="modal-text" style="font-size:12px; color:#334155; margin-bottom:8px; font-weight:600;"></p>
+      <input type="text" id="modal-field" value="">
+      <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:14px;">
+        <button class="btn" id="btn-modal-cancel">Cancel</button>
+        <button class="btn btn-blue" id="btn-modal-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast">Saved! ✓</div>
+
+  <script>
+    function playClickSound() {
+      try {
+        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(450, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.03);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.03);
+      } catch (e) {}
+    }
+
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.btn') || e.target.closest('button')) {
+        playClickSound();
+      }
+    });
+
+    var DEFAULT_SYLLABUS = {
+      botany: {
+        name: "Botany", icon: "🌱", desc: "Plant Physiology, Diversity & Taxonomy",
+        lessons: [
+          {
+            id: "bot_ch1", name: "Chapter 1: The Living World", chNum: "Chapter 1",
+            subtopics: [
+              { title: "1.1 What is Living?", flowcharts: [{ name: "Anchor Chart 1", ascii: "+-------------------------------------------------------------------------+\n|        BIONIVAS ANCHOR CHART 1: WHAT IS LIVING                          |\n+------------------------------------+------------------------------------+\n                                     |\n                                     v [Primary Criterion]\n+------------------------------------+------------------------------------+\n|  Metabolism, cellular organisation and consciousness are defining        |\n+------------------------------------+------------------------------------+\n                                     |\n                                     v [Structural Boundary]\n+------------------------------------+------------------------------------+\n|  Growth and reproduction are non-defining properties of living organisms |\n+-------------------------------------------------------------------------+" }] },
+              { 
+                title: "Ernst Mayr (Scientist Profile)", 
+                flowcharts: [
+                  { name: "Anchor Chart 1: Profile", ascii: "+-------------------------------------------------------------------------+\n| SCIENTIST PROFILE: ERNST MAYR (1904 – 2004)                             |\n| - Title               : 'The Darwin of the 20th century'                |\n| - Affiliation         : Harvard University (Alexander Agassiz Prof)     |\n| - Major Contribution  : Origin of species diversity & Biological Species|\n+------------------------------------+------------------------------------+\n                                     |\n                                     v [Biographical Milestone]\n+------------------------------------+------------------------------------+\n|  Born: 5 July 1904 (Germany)       |  Joined Harvard: 1953 (Ret: 1975)  |\n+------------------------------------+------------------------------------+\n                                     |\n                                     v [Final Realization]\n+-------------------------------------------------------------------------+\n|  THE TRIPLE CROWN: Balzan (1983) | Int. Prize (1994) | Crafoord (1999)  |\n+-------------------------------------------------------------------------+" },
+                  { name: "Anchor Chart 2: Traps", ascii: "+-------------------------------------------------------------------------+\n|        BIONIVAS ANCHOR CHART 2: EXAM TRAP & INVERSION MATRIX            |\n+------------------------------------+------------------------------------+\n  PREMISE: Ernst Mayr = 'The Darwin of the 20th century'\n      |\n      v [Exam Trap Check]\n  TRAPS TO AVOID:\n  * Do NOT confuse 20th century with 19th century.\n  * Do NOT confuse Harvard University with Oxford/Cambridge.\n  * Memorize exact Triple Crown prize years (1983, 1994, 1999).\n      |\n      v\n  EXAM READINESS: 100% Secured" },
+                  { name: "Anchor Chart 3: Research Scope", ascii: "+-------------------------------------------------------------------------+\n|        BIONIVAS ANCHOR CHART 3: SCOPE OF RESEARCH & IMPACT              |\n+------------------------------------+------------------------------------+\n  FIELDS: Ornithology, Taxonomy, Zoogeography, Evolution, Systematics\n      |\n      v [Evolutionary Milestone]\n  CENTRAL QUESTION: Origin of species diversity in evolutionary biology\n+-------------------------------------------------------------------------+" }
+                ],
+                script: [
+                  { name: "Phase 1: Hook", content: "=== Phase 1: Breaking the Illusion ===\n[Whiteboard Action]:\nWrite ERNST MAYR (1904–2004) in bold letters. Below it, write his famous title in quotation marks: 'The Darwin of the 20th century'.\n     [ ERNST MAYR (1904–2004) ]  --->  [ 'The Darwin of the 20th century' ]\n\n[Dialogue Delivery - English]:\n\"When we talk about evolutionary biology, everyone remembers Charles Darwin. But who finished what Darwin started in modern times? Meet Ernst Mayr.\"\n\n[Dialogue Delivery - Telugu]:\n\"జీవపరిణామ శాస్త్రం (Evolution) అనగానే మనకు చార్లెస్ డార్విన్ గుర్తుకొస్తారు. మరి ఆధునిక కాలంలో ఆ డార్విన్ అంతటివాడు ఎవరు? ఆయనే ఎర్నెస్ట్ మేయర్ [Ernst Mayr].\"" },
+                  { name: "Phase 2: Triple Crown", content: "=== Phase 2: Core Architecture ===\n[Whiteboard Action]:\nDraw three connecting podium boxes on the board labeled with the three prizes and their exact years:\n * Balzan (1983)\n * Int. Prize for Biology (1994)\n * Crafoord (1999)\n   Above them, write: THE TRIPLE CROWN OF BIOLOGY.\n\n[Dialogue Delivery - English]:\n\"When a scientist does monumental work, the world recognizes it. Ernst Mayr received three of the most prestigious international honors in science, widely known in the academic world as [the triple crown of biology].\"" }
+                ],
+                master: '1. Line-by-Line Semantic Deconstruction:\n• NCERT highlights Mayrs role in synthesizing Mendelian genetics with Darwinian natural selection.\n\n2. Exam Trap Matrix:\n• Trap: Inverting 20th century to 19th century or Harvard to Oxford.'
+              }
+            ]
+          }
+        ]
+      },
+      zoology: { name: "Zoology", icon: "🧬", desc: "Human Physiology & Reproduction", lessons: [] }
+    };
+
+    var AppData = null;
+    var State = { subject: "botany", lessonId: null, subtopicIdx: 0, activeFlowchartIdx: 0, activeScriptIdx: 0, zoom: 1.0 };
+
+    function loadSaved() {
+      try {
+        var raw = localStorage.getItem("bioflip_data_bionivas_v1");
+        if (raw) {
+          var p = JSON.parse(raw);
+          if (p && p.botany && p.zoology) { AppData = p; return; }
+        }
+      } catch (e) {}
+      AppData = JSON.parse(JSON.stringify(DEFAULT_SYLLABUS));
+    }
+
+    function saveState() {
+      try { localStorage.setItem("bioflip_data_bionivas_v1", JSON.stringify(AppData)); } catch (e) {}
+      showToast("Saved! ✓");
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById("toast"); if (!t) return;
+      t.textContent = msg; t.style.opacity = "1";
+      setTimeout(function() { t.style.opacity = "0"; }, 1800);
+    }
+
+    var modalCallback = null;
+    function openModal(title, text, val, onDone) {
+      document.getElementById("modal-title").textContent = title;
+      document.getElementById("modal-text").textContent = text || "";
+      var f = document.getElementById("modal-field");
+      if (val === null) { f.style.display = "none"; } else { f.style.display = "block"; f.value = val || ""; }
+      modalCallback = onDone; document.getElementById("modal").className = "modal-backdrop open";
+      if (val !== null) f.focus();
+    }
+    function closeModal() { document.getElementById("modal").className = "modal-backdrop"; modalCallback = null; }
+
+    document.getElementById("btn-modal-cancel").addEventListener("click", closeModal);
+    document.getElementById("btn-modal-ok").addEventListener("click", function() {
+      if (modalCallback) modalCallback(document.getElementById("modal-field").value.trim());
+      closeModal();
+    });
+
+    function showView(viewId) {
+      document.querySelectorAll(".view-panel").forEach(function(el) { el.classList.remove("active"); });
+      document.getElementById(viewId).classList.add("active");
+    }
+
+    function updateCounts() {
+      var botCount = AppData.botany.lessons.reduce(function(acc, l) { return acc + l.subtopics.length; }, 0);
+      var zooCount = AppData.zoology.lessons.reduce(function(acc, l) { return acc + l.subtopics.length; }, 0);
+      document.getElementById("botany-count").textContent = AppData.botany.lessons.length + " Chapters (" + botCount + " Topics) ➔";
+      document.getElementById("zoology-count").textContent = AppData.zoology.lessons.length + " Chapters (" + zooCount + " Topics) ➔";
+    }
+
+    function openLessons(stream) {
+      State.subject = stream; var curStream = AppData[stream];
+      document.getElementById("lessons-header-title").textContent = curStream.name + " Chapters";
+      var container = document.getElementById("lessons-list");
+      if (curStream.lessons.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:30px; background:#fff; border:1.5px solid #cbd5e1; border-radius:12px;"><h3 style="margin-bottom:8px;">No chapters in ' + curStream.name + ' yet</h3><button class="btn btn-blue" id="btn-lessons-empty-add">+ Add Chapter in Admin</button></div>';
+        document.getElementById("btn-lessons-empty-add").addEventListener("click", openAdmin);
+      } else {
+        container.innerHTML = curStream.lessons.map(function(l) {
+          return '<div class="card" data-lesson-id="' + l.id + '"><div style="font-size:11px; font-weight:800; color:#1d4ed8;">' + l.chNum + '</div><div class="card-title" style="margin-top:2px;">' + l.name + '</div><div class="card-sub">' + l.subtopics.length + ' Sub-topics ➔</div></div>';
+        }).join("");
+        container.querySelectorAll(".card").forEach(function(card) {
+          card.addEventListener("click", function() { openSubtopics(this.getAttribute("data-lesson-id")); });
+        });
+      }
+      showView("view-lessons");
+    }
+
+    function openSubtopics(lessonId) {
+      State.lessonId = lessonId; State.subtopicIdx = 0; State.activeFlowchartIdx = 0; State.activeScriptIdx = 0;
+      var curStream = AppData[State.subject];
+      var curLesson = curStream.lessons.find(function(l) { return l.id === lessonId; });
+      if (!curLesson) return;
+      document.getElementById("subtopics-header-title").textContent = curLesson.name;
+      renderSubtopicTabs(curLesson);
+      showView("view-subtopics");
+    }
+
+    function formatScriptHtml(rawScriptText) {
+      if (!rawScriptText) return '<div class="script-box english-script">Review injected script.</div>';
+      var parts = rawScriptText.split(/\n\s*\n/);
+      var html = "";
+      for (var i = 0; i < parts.length; i++) {
+        var part = parts[i].trim();
+        if (!part) continue;
+        if (part.indexOf("[Whiteboard Action]") !== -1 || part.indexOf("Write ") !== -1 || part.indexOf("Draw ") !== -1 || part.indexOf("     [") !== -1) {
+          html += '<div class="whiteboard-black-box">' + part.replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div>';
+        } else if (part.indexOf("Telugu") !== -1 || /[అ-హాణ]/.test(part)) {
+          html += '<div class="script-box telugu-script">' + part.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, '<br/>') + '</div>';
+        } else {
+          html += '<div class="script-box english-script">' + part.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, '<br/>') + '</div>';
+        }
+      }
+      return html;
+    }
+
+    function renderSubtopicTabs(curLesson) {
+      var bar = document.getElementById("subtopic-tab-bar"); var body = document.getElementById("subtopic-body");
+      bar.innerHTML = curLesson.subtopics.map(function(s, idx) {
+        return '<button class="btn ' + (idx === State.subtopicIdx ? 'btn-blue' : '') + '" style="white-space:nowrap;" data-tab-idx="' + idx + '">' + s.title + '</button>';
+      }).join("");
+      bar.querySelectorAll("button").forEach(function(btn) {
+        btn.addEventListener("click", function() { State.subtopicIdx = parseInt(this.getAttribute("data-tab-idx"), 10); State.activeFlowchartIdx = 0; State.activeScriptIdx = 0; renderSubtopicTabs(curLesson); });
+      });
+
+      var active = curLesson.subtopics[State.subtopicIdx] || curLesson.subtopics[0];
+      var charts = active.flowcharts || [{ name: "Anchor Chart 1", ascii: "No flowchart injected." }];
+      var flowchartTabsHtml = charts.length > 1 ? '<div class="flowchart-slider-tabs">' + charts.map(function(c, fIdx) {
+        return '<button class="btn ' + (fIdx === State.activeFlowchartIdx ? 'btn-blue' : '') + '" style="padding:4px 10px; font-size:11px;" data-flow-idx="' + fIdx + '">' + c.name + '</button>';
+      }).join("") + '</div>' : '';
+
+      var currentFlowchart = charts[State.activeFlowchartIdx] || charts[0];
+
+      var scripts = active.script;
+      if (!scripts) {
+        scripts = [{ name: "Phase 1", content: "[Whiteboard Action]: Highlights core NCERT rules.\n\n[Dialogue Delivery]: Review injected scripts." }];
+      } else if (typeof scripts === "string") {
+        scripts = [{ name: "Phase 1", content: scripts }];
+      }
+      var scriptTabsHtml = scripts.length > 1 ? '<div class="flowchart-slider-tabs">' + scripts.map(function(sc, scIdx) {
+        return '<button class="btn ' + (scIdx === State.activeScriptIdx ? 'btn-blue' : '') + '" style="padding:4px 10px; font-size:11px;" data-script-idx="' + scIdx + '">' + sc.name + '</button>';
+      }).join("") + '</div>' : '';
+      var currentScript = scripts[State.activeScriptIdx] || scripts[0];
+
+      var defaultMaster = '<div><b>1. Semantic Deconstruction:</b> Review verbatim NCERT lines.<br/><b>2. DTS Trap Matrix:</b> Watch out for single-word replacements.</div>';
+
+      body.innerHTML = 
+        '<h2 style="font-size:18px; font-weight:800; margin-bottom:8px; color:#090d16;">' + active.title + '</h2>' +
+        '<div class="gci-section-title">Section 1: The High-Yield "Anchor" Charts</div>' +
+        '<div class="card">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;"><b style="font-size:12px; color:#1d4ed8; font-weight:800;">' + currentFlowchart.name.toUpperCase() + '</b><button class="btn" style="padding:4px 10px; font-size:11px;" id="btn-copy-chart">📋 Copy</button></div>' +
+          flowchartTabsHtml +
+          '<pre class="ascii-box" id="active-flowchart">' + currentFlowchart.ascii + '</pre>' +
+        '</div>' +
+        '<div class="gci-section-title">Section 2: The Whiteboard Lecture Delivery</div>' +
+        '<div class="card" style="background:#f8fafc;">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;"><b style="font-size:12px; color:#1e40af; font-weight:800;">' + currentScript.name.toUpperCase() + '</b></div>' +
+          scriptTabsHtml +
+          formatScriptHtml(currentScript.content) +
+        '</div>' +
+        '<div class="gci-section-title">Section 3: The Educator Master Dissection</div>' +
+        '<div class="card" style="background:#fdf4ff; border-color:#e9d5ff;"><b style="font-size:13px; color:#7e22ce; font-weight:800;">Exam Framework & Traps</b><div style="font-size:13px; line-height:1.6; margin-top:6px; color:#090d16; font-weight:600; white-space:pre-wrap;" class="english-script">' + (active.master || defaultMaster) + '</div></div>';
+
+      body.querySelectorAll(".flowchart-slider-tabs button").forEach(function(b) {
+        b.addEventListener("click", function() {
+          var fIdx = this.getAttribute("data-flow-idx");
+          var scIdx = this.getAttribute("data-script-idx");
+          if (fIdx !== null) State.activeFlowchartIdx = parseInt(fIdx, 10);
+          if (scIdx !== null) State.activeScriptIdx = parseInt(scIdx, 10);
+          renderSubtopicTabs(curLesson);
+        });
+      });
+      document.getElementById("btn-copy-chart").addEventListener("click", function() {
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(document.getElementById("active-flowchart").textContent).then(function() { showToast("Copied! ✓"); });
+      });
+    }
+
+    function openAdmin() { renderAdmin(); showView("view-admin"); }
+
+    function renderAdmin() {
+      var curStream = AppData[State.subject];
+      document.getElementById("btn-admin-tab-botany").className = State.subject === "botany" ? "btn btn-green" : "btn";
+      document.getElementById("btn-admin-tab-zoology").className = State.subject === "zoology" ? "btn btn-green" : "btn";
+      document.getElementById("admin-chapters-label").textContent = "Chapters (" + curStream.name + ")";
+
+      var chList = document.getElementById("admin-chapters-list");
+      chList.innerHTML = curStream.lessons.map(function(l) {
+        return '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; border:1.5px solid ' + (State.lessonId === l.id ? '#1d4ed8' : '#cbd5e1') + '; background:' + (State.lessonId === l.id ? '#eff6ff' : '#fff') + '; margin-top:6px;"><div style="cursor:pointer; flex:1;" class="admin-chapter-select" data-id="' + l.id + '"><b>' + l.chNum + ':</b> ' + l.name + '</div><div style="display:flex; gap:6px;"><button class="btn btn-admin-edit-les" style="padding:4px 8px; font-size:11px;" data-id="' + l.id + '">✏️</button><button class="btn btn-red btn-admin-del-les" style="padding:4px 8px; font-size:11px;" data-id="' + l.id + '">🗑</button></div></div>';
+      }).join("");
+
+      chList.querySelectorAll(".admin-chapter-select").forEach(function(el) {
+        el.addEventListener("click", function() { State.lessonId = this.getAttribute("data-id"); State.subtopicIdx = 0; renderAdmin(); });
+      });
+      chList.querySelectorAll(".btn-admin-edit-les").forEach(function(el) {
+        el.addEventListener("click", function() { var id = this.getAttribute("data-id"); var l = curStream.lessons.find(function(x) { return x.id === id; }); openModal("Rename Chapter", "Edit title:", l.name, function(val) { if (val) { l.name = val; saveState(); renderAdmin(); } }); });
+      });
+      chList.querySelectorAll(".btn-admin-del-les").forEach(function(el) {
+        el.addEventListener("click", function() { var id = this.getAttribute("data-id"); openModal("Delete Chapter", "Delete chapter?", null, function() { curStream.lessons = curStream.lessons.filter(function(x) { return x.id !== id; }); State.lessonId = null; saveState(); renderAdmin(); }); });
+      });
+
+      var curLesson = curStream.lessons.find(function(l) { return l.id === State.lessonId; }) || curStream.lessons[0] || null;
+      var subCard = document.getElementById("admin-subtopics-card"); var genCard = document.getElementById("admin-generate-card");
+      if (curLesson) {
+        State.lessonId = curLesson.id; subCard.style.display = "block";
+        document.getElementById("admin-subtopics-label").textContent = "Subtopics in " + curLesson.name;
+        var subList = document.getElementById("admin-subtopics-list");
+        subList.innerHTML = curLesson.subtopics.map(function(s, idx) {
+          return '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; border:1.5px solid ' + (idx === State.subtopicIdx ? '#1d4ed8' : '#cbd5e1') + '; background:' + (idx === State.subtopicIdx ? '#eff6ff' : '#fff') + '; margin-top:6px;"><div style="cursor:pointer; flex:1;" class="admin-subtopic-select" data-idx="' + idx + '"><b>' + s.title + '</b></div><div style="display:flex; gap:6px;"><button class="btn btn-admin-edit-sub" style="padding:4px 8px; font-size:11px;" data-idx="' + idx + '">✏️</button><button class="btn btn-red btn-admin-del-sub" style="padding:4px 8px; font-size:11px;" data-idx="' + idx + '">🗑</button></div></div>';
+        }).join("");
+
+        subList.querySelectorAll(".admin-subtopic-select").forEach(function(el) {
+          el.addEventListener("click", function() { State.subtopicIdx = parseInt(this.getAttribute("data-idx"), 10); renderAdmin(); });
+        });
+        subList.querySelectorAll(".btn-admin-edit-sub").forEach(function(el) {
+          el.addEventListener("click", function() { var idx = parseInt(this.getAttribute("data-idx"), 10); var curSub = curLesson.subtopics[idx]; openModal("Rename Subtopic", "Edit title:", curSub.title, function(val) { if (val) { curSub.title = val; saveState(); renderAdmin(); } }); });
+        });
+        subList.querySelectorAll(".btn-admin-del-sub").forEach(function(el) {
+          el.addEventListener("click", function() { var idx = parseInt(this.getAttribute("data-idx"), 10); openModal("Delete Subtopic", "Delete subtopic?", null, function() { curLesson.subtopics.splice(idx, 1); State.subtopicIdx = 0; saveState(); renderAdmin(); }); });
+        });
+
+        var activeSub = curLesson.subtopics[State.subtopicIdx] || curLesson.subtopics[0];
+        if (activeSub) { 
+          genCard.style.display = "block"; 
+          document.getElementById("admin-generate-title").textContent = "BioNivas Framework Injection for: " + activeSub.title;
+          
+          var charts = activeSub.flowcharts || [];
+          document.getElementById("admin-sec1-ascii").value = charts.map(function(c) { return "=== " + c.name + " ===\n" + c.ascii; }).join("\n\n---\n\n");
+          
+          var scripts = activeSub.script;
+          if (Array.isArray(scripts)) {
+            document.getElementById("admin-sec2-script").value = scripts.map(function(sc) { return "=== " + sc.name + " ===\n" + sc.content; }).join("\n\n---\n\n");
+          } else {
+            document.getElementById("admin-sec2-script").value = scripts || "";
+          }
+
+          document.getElementById("admin-sec3-master").value = activeSub.master ? activeSub.master.replace(/<br\s*[\/]?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "") : "";
+        } else { genCard.style.display = "none"; }
+      } else { subCard.style.display = "none"; genCard.style.display = "none"; }
+    }
+
+    loadSaved(); updateCounts();
+
+    document.getElementById("btn-download-pdf").addEventListener("click", function() { window.print(); });
+
+    document.getElementById("btn-zoom-in").addEventListener("click", function() { State.zoom = Math.min(1.6, State.zoom + 0.15); document.getElementById("app-root").style.zoom = State.zoom; showToast("Zoom: " + Math.round(State.zoom * 100) + "%"); });
+    document.getElementById("btn-zoom-out").addEventListener("click", function() { State.zoom = Math.max(0.8, State.zoom - 0.15); document.getElementById("app-root").style.zoom = State.zoom; showToast("Zoom: " + Math.round(State.zoom * 100) + "%"); });
+
+    document.getElementById("btn-to-admin").addEventListener("click", openAdmin);
+    document.getElementById("btn-lessons-to-admin").addEventListener("click", openAdmin);
+    document.getElementById("btn-subtopics-to-admin").addEventListener("click", openAdmin);
+    document.getElementById("btn-admin-to-student").addEventListener("click", function() { updateCounts(); showView("view-subjects"); });
+
+    document.getElementById("card-botany").addEventListener("click", function() { openLessons("botany"); });
+    document.getElementById("card-zoology").addEventListener("click", function() { openLessons("zoology"); });
+    document.getElementById("btn-lessons-back").addEventListener("click", function() { updateCounts(); showView("view-subjects"); });
+    document.getElementById("btn-subtopics-back").addEventListener("click", function() { openLessons(State.subject); });
+
+    document.getElementById("btn-admin-tab-botany").addEventListener("click", function() { State.subject = "botany"; State.lessonId = null; State.subtopicIdx = 0; renderAdmin(); });
+    document.getElementById("btn-admin-tab-zoology").addEventListener("click", function() { State.subject = "zoology"; State.lessonId = null; State.subtopicIdx = 0; renderAdmin(); });
+
+    document.getElementById("btn-admin-add-chapter").addEventListener("click", function() {
+      openModal("New Chapter", "Enter chapter title:", "", function(val) {
+        if (!val) return;
+        var curStream = AppData[State.subject];
+        var newL = { id: "les_" + Date.now(), name: val, chNum: "Chapter " + (curStream.lessons.length + 1), subtopics: [] };
+        curStream.lessons.push(newL); State.lessonId = newL.id; saveState(); renderAdmin();
+      });
+    });
+
+    document.getElementById("btn-admin-add-subtopic").addEventListener("click", function() {
+      openModal("New Subtopic", "Enter subtopic title:", "", function(val) {
+        if (!val) return;
+        var curStream = AppData[State.subject];
+        var curLesson = curStream.lessons.find(function(l) { return l.id === State.lessonId; });
+        if (!curLesson) return;
+        curLesson.subtopics.push({ title: val, flowcharts: [{ name: "Anchor Chart 1", ascii: "+-------------------+\n|  Paste Code Here  |\n+-------------------+" }] });
+        State.subtopicIdx = curLesson.subtopics.length - 1; saveState(); renderAdmin();
+      });
+    });
+
+    // Save & Inject 3-Section Framework into BioFlip App
+    document.getElementById("btn-admin-inject-code").addEventListener("click", function() {
+      var curStream = AppData[State.subject];
+      var curLesson = curStream.lessons.find(function(l) { return l.id === State.lessonId; });
+      if (!curLesson || !curLesson.subtopics[State.subtopicIdx]) return;
+      var curSub = curLesson.subtopics[State.subtopicIdx];
+
+      var rawAscii = document.getElementById("admin-sec1-ascii").value.trim();
+      var rawScript = document.getElementById("admin-sec2-script").value.trim();
+      var rawMaster = document.getElementById("admin-sec3-master").value.trim();
+
+      // Parser for Section 1 Flowcharts
+      var chunks = rawAscii.split(/\n\s*[-=]{3,}\s*\n/);
+      var newCharts = [];
+      for (var i = 0; i < chunks.length; i++) {
+        var chunk = chunks[i].trim();
+        if (!chunk) continue;
+        var name = "Anchor Chart " + (i + 1);
+        var ascii = chunk;
+        var firstLineEnd = chunk.indexOf("\n");
+        if (firstLineEnd !== -1) {
+          var firstLine = chunk.substring(0, firstLineEnd).trim();
+          if (firstLine.indexOf("===") === 0 || firstLine.indexOf("---") === 0 || firstLine.indexOf("ANCHOR") !== -1 || firstLine.indexOf("CHART") !== -1) {
+            name = firstLine.replace(/=/g, "").replace(/-/g, "").trim();
+            ascii = chunk.substring(firstLineEnd + 1).trim();
+          }
+        }
+        newCharts.push({ name: name, ascii: ascii });
+      }
+
+      // Parser for Section 2 Scripts
+      var scriptChunks = rawScript.split(/\n\s*[-=]{3,}\s*\n/);
+      var newScripts = [];
+      for (var j = 0; j < scriptChunks.length; j++) {
+        var schunk = scriptChunks[j].trim();
+        if (!schunk) continue;
+        var sname = "Phase " + (j + 1);
+        var scontent = schunk;
+        var slineEnd = schunk.indexOf("\n");
+        if (slineEnd !== -1) {
+          var sfirstLine = schunk.substring(0, slineEnd).trim();
+          if (sfirstLine.indexOf("===") === 0 || sfirstLine.indexOf("---") === 0 || sfirstLine.indexOf("Phase") !== -1 || sfirstLine.indexOf("Section") !== -1) {
+            sname = sfirstLine.replace(/=/g, "").replace(/-/g, "").trim();
+            scontent = schunk.substring(slineEnd + 1).trim();
+          }
+        }
+        newScripts.push({ name: sname, content: scontent });
+      }
+
+      if (newCharts.length > 0) curSub.flowcharts = newCharts;
+      if (newScripts.length > 0) curSub.script = newScripts;
+      if (rawMaster) curSub.master = rawMaster;
+
+      saveState();
+      showToast("3-Section Framework Injected Successfully! ✓");
+      renderAdmin();
+    });
+  </script>
+</body>
+</html>
